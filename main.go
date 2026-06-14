@@ -1,17 +1,23 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/abh-i-navv/msg-queue/internal/queue"
 )
 
 func main() {
-	broker := queue.NewBroker((100))
+	storage := queue.NewFileStorage("./data")
+	broker, err := queue.NewBroker(100, storage)
+
+	if err != nil {
+		fmt.Println("Error loading messages")
+		return
+	}
 
 	go producer(broker)
-	time.Sleep(1 * time.Second)
 	go consumer(broker)
 
-	time.Sleep(1 * time.Second)
+	time.Sleep(10 * time.Second)
 }
