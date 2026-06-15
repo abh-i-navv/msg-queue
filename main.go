@@ -15,6 +15,7 @@ func main() {
 		fmt.Println("Error loading messages")
 		return
 	}
+	broker.StartRetryLoop()
 
 	go producer(broker)
 	go consumer(broker)

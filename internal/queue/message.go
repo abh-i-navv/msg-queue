@@ -1,6 +1,7 @@
 package queue
 
 type Message struct {
-	ID      string
-	Payload []byte
+	ID         string
+	Payload    []byte
+	RetryCount int
 }

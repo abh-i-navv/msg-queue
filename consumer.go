@@ -8,11 +8,13 @@ import (
 
 func consumer(b *queue.Broker) {
 	for {
-		msg, ok := b.Consume()
-		if !ok {
-			fmt.Println("Not OK")
-			return
+		delivery, ok := b.Consume()
+		if ok {
+			fmt.Println("Consumed:", string(delivery.Message.ID))
+
+			if err := delivery.Ack(); err != nil {
+				fmt.Println(err)
+			}
 		}
-		fmt.Println("Consumed:", string(msg.Payload))
 	}
 }
